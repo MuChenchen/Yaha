@@ -18,3 +18,4 @@ void loop() {
   Serial.println(sensorValueY);
   delay(100);
 }
+
