@@ -1,18 +1,26 @@
 #yaho
-	#define Pin_X A1
-	#define Pin_Y A0
-	void setup() {
-  		Serial.begin(9600);    //串口初始化
-  		pinMode(Pin_X,INPUT);
-  		pinMode(Pin_Y,INPUT);
-	}
-	void loop() {
-  		int sensorValueX = analogRead(Pin_X);      //X轴输入
-  		int sensorValueY = analogRead(Pin_Y);      //Y轴输入
-  		Serial.print("ValueX:");
-  		Serial.print(sensorValueX);
-  		Serial.print(",");
-  		Serial.print("ValueY:");
-  		Serial.println(sensorValueY);
-  		delay(100);
-	}
+//1,屏幕显示部分=============================
+#include "U8glib.h"
+//2,传感器部分================================
+#include <Wire.h>
+#include "I2Cdev.h"
+//温湿度
+#include <AM2321.h>
+AM2321 am2321;
+
+#include <SoftwareSerial.h>
+
+const int ledPin =  13;
+
+#include "weather.h"
+#include "oled.h"
+
+void setup(void) {
+  Serial.begin(115200);
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop(void) {
+  updateSensorData();
+  volcd();
+}
